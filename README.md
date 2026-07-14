@@ -20,7 +20,7 @@ LOSAF evolved out of an existing single-tenant Azure Sentinel SOAR platform (ret
 
 ### 🌐 Multi-Cloud Collection
 - AWS CloudTrail, Azure Entra ID, Kubernetes audit logs
-- Each collector attempts a real API call first (using credentials/cluster context if present), and falls back to realistic mock data if absent or unreachable — so the full pipeline runs with zero cloud setup required
+- Each collector attempts a real API call first (using credentials/cluster context if present), and falls back to realistic mock data if absent or unreachable - so the full pipeline runs with zero cloud setup required
 
 ### 🔄 Event Normalization
 - Unifies three cloud-vendor event formats into a single schema: `action`, `actor`, `target`, `severity`
@@ -40,11 +40,11 @@ LOSAF evolved out of an existing single-tenant Azure Sentinel SOAR platform (ret
 
 ---
 
-## ⚠️ Current Scope — What's Implemented vs. Planned
+## ⚠️ Current Scope - What's Implemented vs. Planned
 
 LOSAF's detection engine **computes and recommends** a response action (e.g. `TERMINATE_POD`, `REVOKE_CREDENTIALS`) and flags whether it's high-confidence enough to be auto-executed vs. requiring SOC approval. **It does not yet call the cloud provider APIs to execute that action.** Wiring the recommendation layer to real AWS IAM / Kubernetes / Microsoft Graph remediation calls is the natural next step and is architected for, but not implemented in this version.
 
-Similarly, detection results are computed live from the database on each request (CLI or API) rather than persisted to a separate historical detections table — there is currently no detection audit log beyond the `raw_events` status trail.
+Similarly, detection results are computed live from the database on each request (CLI or API) rather than persisted to a separate historical detections table - there is currently no detection audit log beyond the `raw_events` status trail.
 
 ---
 
@@ -103,6 +103,7 @@ Open `http://localhost:5173`. You'll see live AWS/Azure/Kubernetes event counts,
 ---
 
 ## 📊 Architecture
+```
 AWS / Azure / Kubernetes
 │
 ▼
@@ -131,18 +132,18 @@ REST API (GET /api/detections)
 │
 ▼
 React Dashboard
-
+```
 See [docs/architecture.md](./docs/architecture.md) for full component detail.
 
 ---
 
 ## 🛠️ Technology Stack
-
+```
 **Backend:** Node.js, TypeScript, Express, Prisma ORM, PostgreSQL (Supabase)
 **Frontend:** React, Vite, Recharts
 **Cloud SDKs:** AWS SDK v2, Azure Identity, `@kubernetes/client-node`
 **Detection:** YAML rule engine, MITRE ATT&CK v13 reference data
-
+```
 ---
 
 ## 🎯 MITRE ATT&CK Coverage
