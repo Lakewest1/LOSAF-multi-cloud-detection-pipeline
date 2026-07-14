@@ -1,4 +1,4 @@
-# LOSAF: Lakewe$t Open Security Automation Framework
+# LOSAF: Lakewest Open Security Automation Framework
 
 > **Open-source, multi-cloud threat detection pipeline with MITRE ATT&CK mapping and declarative detection rules**
 
@@ -138,12 +138,11 @@ See [docs/architecture.md](./docs/architecture.md) for full component detail.
 ---
 
 ## 🛠️ Technology Stack
-```
+
 **Backend:** Node.js, TypeScript, Express, Prisma ORM, PostgreSQL (Supabase)
 **Frontend:** React, Vite, Recharts
 **Cloud SDKs:** AWS SDK v2, Azure Identity, `@kubernetes/client-node`
 **Detection:** YAML rule engine, MITRE ATT&CK v13 reference data
-```
 ---
 
 ## 🎯 MITRE ATT&CK Coverage
