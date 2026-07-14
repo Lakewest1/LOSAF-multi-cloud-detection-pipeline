@@ -1,4 +1,4 @@
-# LOSAF: Linux Open Security Automation Framework
+# LOSAF: Lakewe$t Open Security Automation Framework
 
 > **Open-source, multi-cloud threat detection pipeline with MITRE ATT&CK mapping and declarative detection rules**
 
