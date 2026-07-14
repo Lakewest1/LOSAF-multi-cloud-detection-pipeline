@@ -1,0 +1,104 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model audit_logs {
+  id             BigInt   @id @default(autoincrement())
+  execution_id   String?
+  incident_id    String?
+  correlation_id String?
+  action         String?
+  result         String?
+  metadata       Json?
+  created_at     DateTime @default(now())
+}
+
+model workflow_executions {
+  id             BigInt   @id @default(autoincrement())
+  execution_id   String   @unique
+  incident_id    String?
+  correlation_id String?
+  workflow_step  String?
+  status         String?
+  retry_count    Int      @default(0)
+  error_message  String?
+  created_at     DateTime @default(now())
+}
+
+model analyst_decisions {
+  id             BigInt   @id @default(autoincrement())
+  incident_id    String?
+  execution_id   String?
+  correlation_id String?
+  decision       String?
+  analyst        String?
+  created_at     DateTime @default(now())
+}
+
+model rollback_records {
+  id                  BigInt    @id @default(autoincrement())
+  rollback_id         String    @unique
+  execution_id        String
+  correlation_id      String?
+  user_id             String?
+  username            String?
+  old_account_enabled Boolean?
+  rollback_status     String?
+  status              String?
+  rolled_back_at      DateTime?
+  created_at          DateTime? @default(now())
+}
+
+model user_baseline {
+  id           BigInt   @id @default(autoincrement())
+  user_email   String   @unique
+  last_country String?
+  last_device  String?
+  updated_at   DateTime @default(now())
+}
+
+model incidents {
+  id                 BigInt    @id @default(autoincrement())
+  incident_id        String    @unique
+  execution_id       String?
+  correlation_id     String?
+  severity           String?
+  risk_score         Int?
+  status             String?
+  user_email         String?
+  source_ip          String?
+  created_at         DateTime  @default(now())
+  analyst_decision   String?
+  approval_deadline  DateTime?
+  servicenow_ticket  String?
+  soc_decision       String?   @default("PENDING")
+  decision_time      DateTime? @db.Timestamp(6)
+  timeout_deadline   DateTime? @db.Timestamp(6)
+  containment_reason String?
+  rollback_id        String?
+}
+
+model RawEvent {
+  id             BigInt   @id @default(autoincrement())
+  rawId          String   @unique
+  source         String
+  eventType      String
+  user           String
+  sourceIP       String
+  timestamp      DateTime
+  region         String?
+  resourceType   String?
+  rawData        String
+  normalizedData Json?
+  status         String   @default("pending")
+  createdAt      DateTime @default(now())
+
+  @@map("raw_events")
+}

@@ -1,0 +1,60 @@
+{
+  "name": "losaf-platform",
+  "version": "0.1.0",
+  "description": "Linux Open Security Automation Framework - Cloud-native threat detection and automated response",
+  "main": "api/server.ts",
+  "type": "commonjs",
+  "scripts": {
+    "start": "ts-node api/server.ts",
+    "dev": "nodemon --exec ts-node api/server.ts",
+    "collector:aws": "ts-node collectors/aws/cloudtrail.ts",
+    "collector:k8s": "ts-node collectors/kubernetes/auditLogs.ts",
+    "collector:azure": "ts-node collectors/azure/entra.ts",
+    "normalizer": "ts-node normalization/event-normalizer.ts",
+    "mapper": "ts-node mitre/attack-mapper.ts",
+    "detector": "ts-node detections/detector.ts",
+    "demo": "ts-node demo/attack-scenario.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "soar",
+    "security-automation",
+    "threat-detection",
+    "cloud-security",
+    "kubernetes",
+    "aws",
+    "azure"
+  ],
+  "author": "Musa olalekan Sir Lakewest",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/identity": "^4.13.1",
+    "@azure/service-bus": "^7.9.5",
+    "@kubernetes/client-node": "^1.4.0",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
+    "@prisma/client": "^6.19.3",
+    "@supabase/supabase-js": "^2.106.2",
+    "aws-sdk": "^1.18.0",
+    "axios": "^1.16.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "isomorphic-fetch": "^3.0.0",
+    "lucide-react": "^1.24.0",
+    "nodemailer": "^9.0.3",
+    "prisma": "^6.19.3",
+    "react-router-dom": "^7.16.0",
+    "recharts": "^3.8.1",
+    "simple-icons": "^16.26.0",
+    "uuid": "^14.0.0",
+    "yaml": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.5",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}

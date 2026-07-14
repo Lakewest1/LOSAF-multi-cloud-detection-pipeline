@@ -1,0 +1,37 @@
+name: Identity Privilege Escalation
+id: identity-priv-001
+
+description: |
+  Detects credential creation events flagged with high severity —
+  the pattern most associated with an attacker establishing
+  persistent access via a newly created access key.
+
+source: aws_cloudtrail
+normalized_action: CREDENTIAL_CREATION
+
+mitre:
+  technique: T1552
+  technique_name: Unsecured Credentials
+  tactic: Credential Access
+
+conditions:
+  - field: action
+    equals: CREDENTIAL_CREATION
+    weight: 40
+  - field: severity
+    equals: high
+    weight: 30
+
+trigger_threshold: 40
+risk_score: 85
+
+recommended_response:
+  auto_response: false
+  action: REVOKE_CREDENTIALS
+  approval_required: true
+
+tags:
+  - persistence
+  - privilege-escalation
+  - identity
+  - credential-access

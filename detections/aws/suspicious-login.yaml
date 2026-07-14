@@ -1,0 +1,42 @@
+name: Suspicious AWS Login from Unusual Location
+id: aws-login-001
+
+description: |
+  Detects AWS console login events where the source IP or region
+  indicates elevated risk (known Tor exit node, high-risk geography,
+  or high severity already assigned by the normalizer).
+
+source: aws_cloudtrail
+normalized_action: USER_LOGIN
+
+mitre:
+  technique: T1078
+  technique_name: Valid Accounts
+  tactic: Initial Access
+  sub_technique: T1078.004
+  sub_technique_name: Cloud Accounts
+
+conditions:
+  - field: sourceIP
+    match: known_tor_exit_node
+    weight: 40
+  - field: region
+    match: high_risk_geography
+    weight: 30
+  - field: severity
+    equals: high
+    weight: 30
+
+trigger_threshold: 30
+risk_score: 75
+
+recommended_response:
+  auto_response: false
+  action: FLAG_FOR_SOC_REVIEW
+  approval_required: true
+
+tags:
+  - identity
+  - cloud
+  - aws
+  - initial-access

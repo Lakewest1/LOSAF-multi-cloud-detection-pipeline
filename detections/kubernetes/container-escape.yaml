@@ -1,0 +1,40 @@
+name: Kubernetes Pod Execution / Container Escape Attempt
+id: k8s-escape-001
+
+description: |
+  Detects exec-into-pod events, which may indicate an attacker running
+  commands inside a container as a precursor to container escape or
+  lateral movement — especially when the target namespace is
+  production or kube-system.
+
+source: kubernetes_audit
+normalized_action: POD_EXECUTION
+
+mitre:
+  technique: T1609
+  technique_name: Container Administration Command
+  tactic: Execution
+
+conditions:
+  - field: action
+    equals: POD_EXECUTION
+    weight: 50
+  - field: objectRef.namespace
+    match: [production, kube-system]
+    weight: 30
+  - field: user.username
+    match: non_standard_service_account
+    weight: 20
+
+trigger_threshold: 50
+risk_score: 90
+
+recommended_response:
+  auto_response: true
+  action: TERMINATE_POD
+  approval_required: false
+
+tags:
+  - execution
+  - kubernetes
+  - container

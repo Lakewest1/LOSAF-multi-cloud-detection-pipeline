@@ -1,0 +1,12 @@
+node_modules
+# Keep environment variables out of version control
+.env
+/generated/prisma
+
+# Local diagnostic scripts — not part of LOSAF's architecture,
+# kept for local troubleshooting only
+check-mitre.js
+check-normalized.js
+check-status.js
+delete-migration.js
+reset-status.js
