@@ -2,7 +2,7 @@
 
 **A walkthrough of the full pipeline: Collection → Normalization → MITRE Mapping → Detection → Dashboard**
 
-This document describes exactly what happens when you run LOSAF's pipeline end-to-end, using real output captured from an actual run — not illustrative/hypothetical numbers.
+This document describes exactly what happens when you run LOSAF's pipeline end-to-end, using real output captured from an actual run - not illustrative/hypothetical numbers.
 
 ---
 
@@ -14,13 +14,13 @@ Before running the demo, clear any previous test data so the numbers below match
 node truncate-demo.js
 ```
 
-This empties `raw_events` only — it does not touch any other tables in the database.
+This empties `raw_events` only - it does not touch any other tables in the database.
 
 ---
 
-## Step 1 — Collection
+## Step 1 -  Collection
 
-Run all three collectors. None require cloud credentials to demonstrate the pipeline — each attempts a real API call first, then falls back to realistic mock data if credentials or a live cluster context are absent.
+Run all three collectors. None require cloud credentials to demonstrate the pipeline -  each attempts a real API call first, then falls back to realistic mock data if credentials or a live cluster context are absent.
 
 ```bash
 npm run collector:aws
@@ -37,7 +37,7 @@ npm run collector:aws
 npm run collector:k8s
 ```
 ```
-[Kubernetes] No active cluster/kubeconfig found — will use mock data for demo
+[Kubernetes] No active cluster/kubeconfig found -  will use mock data for demo
 [Kubernetes] Collected 3 audit events
 📨 K8s Event received: { eventType: 'EXEC', user: 'system:serviceaccount:default:attacker' }
 📨 K8s Event received: { eventType: 'CREATE', user: 'admin' }
@@ -56,11 +56,11 @@ npm run collector:azure
 
 **Result:** 7 raw events persisted to `raw_events`, `status: pending`.
 
-*(If real credentials are set in `.env` — `AWS_ACCESS_KEY_ID`, `AZURE_ACCESS_TOKEN`, or an active `kubeconfig` — the collectors attempt the corresponding real API call instead, transparently. The mock path exists so the pipeline runs deterministically anywhere, not as the only way to use LOSAF.)*
+*(If real credentials are set in `.env` -  `AWS_ACCESS_KEY_ID`, `AZURE_ACCESS_TOKEN`, or an active `kubeconfig` -  the collectors attempt the corresponding real API call instead, transparently. The mock path exists so the pipeline runs deterministically anywhere, not as the only way to use LOSAF.)*
 
 ---
 
-## Step 2 — Normalization
+## Step 2 - Normalization
 
 ```bash
 npm run normalizer
@@ -82,13 +82,13 @@ Actor: admin@company.onmicrosoft.com | Target: AZURE | Severity: high
 [7] azure_entra → USER_LOGIN
 Actor: user@company.onmicrosoft.com | Target: AZURE | Severity: low
 
-Note event `[6]`: the Azure login from `admin@company.onmicrosoft.com` escalates to `high` severity — its mock source IP (`185.220.100.50`) matches a known Tor exit node, and its region is Russia. This is the normalizer's basic threat-signal escalation logic, not just a static severity assignment.
+Note event `[6]`: the Azure login from `admin@company.onmicrosoft.com` escalates to `high` severity - its mock source IP (`185.220.100.50`) matches a known Tor exit node, and its region is Russia. This is the normalizer's basic threat-signal escalation logic, not just a static severity assignment.
 
 **Result:** all 7 events move to `status: normalized`, with `action`/`actor`/`target`/`severity` written into `normalizedData`.
 
 ---
 
-## Step 3 — MITRE ATT&CK Mapping
+## Step 3 -  MITRE ATT&CK Mapping
 
 ```bash
 npm run mapper
@@ -104,10 +104,10 @@ Total Events Analyzed:     7
 Average Risk Score:        82/100
 🔗 MITRE TECHNIQUES DETECTED
 
-T1078 - Valid Accounts (Initial Access) — 3 events — azure_entra, aws_cloudtrail
-T1611 - Escape to Host (Privilege Escalation) — 2 events — kubernetes_audit
-T1609 - Container Administration Command (Execution) — 1 event — kubernetes_audit
-T1552 - Unsecured Credentials (Credential Access) — 1 event — aws_cloudtrail
+T1078 - Valid Accounts (Initial Access) -  3 events - azure_entra, aws_cloudtrail
+T1611 - Escape to Host (Privilege Escalation) - 2 events - kubernetes_audit
+T1609 - Container Administration Command (Execution) - 1 event - kubernetes_audit
+T1552 - Unsecured Credentials (Credential Access) - 1 event - aws_cloudtrail
 
 🛡️  LOSAF Detection Engine
 Loaded 3 detection rules:
@@ -133,11 +133,11 @@ MITRE:         T1552 - Unsecured Credentials
 Response:      REVOKE_CREDENTIALS (auto: false)
 ✅ Detection complete: 2 rule(s) fired across 7 events
 
-Note that `aws-login-001` doesn't fire here — correctly. That rule only evaluates AWS-sourced login events, and the Tor-IP/Russia indicators in this run are on the *Azure* login, not an AWS one. This demonstrates the rule's specificity rather than a bug: each rule only checks the event types it's actually designed for.
+Note that `aws-login-001` doesn't fire here - correctly. That rule only evaluates AWS-sourced login events, and the Tor-IP/Russia indicators in this run are on the *Azure* login, not an AWS one. This demonstrates the rule's specificity rather than a bug: each rule only checks the event types it's actually designed for.
 
 ---
 
-## Step 5 — Dashboard
+## Step 5 - Dashboard
 
 ```bash
 npm run dev              # API, terminal 1
@@ -156,13 +156,13 @@ The collapsible **Legacy** section below shows the original single-cloud Azure S
 
 ## What This Demonstrates
 
-- A complete, verifiable data pipeline — every stage persists real, checkable state in the database (`pending → normalized → mitre_mapped`), not just console output
+- A complete, verifiable data pipeline -  every stage persists real, checkable state in the database (`pending → normalized → mitre_mapped`), not just console output
 - Multi-cloud normalization into one consistent schema
 - Automatic MITRE ATT&CK classification with basic risk scoring
 - Declarative, auditable detection logic (plain YAML, not hidden in code)
-- A live dashboard reflecting exactly what the CLI pipeline computed — same underlying rule-evaluation code (`detections/detectorEngines.ts`) powers both
+- A live dashboard reflecting exactly what the CLI pipeline computed -  same underlying rule-evaluation code (`detections/detectorEngines.ts`) powers both
 
 ## What This Does Not Yet Demonstrate
 
-- Actual execution of remediation actions (pod termination, credential revocation) against real cloud APIs — the detection engine recommends these actions and flags auto- vs. approval-required, but does not call AWS IAM, Kubernetes, or Microsoft Graph to execute them
-- Multi-event, time-windowed correlation (e.g., linking a login to a subsequent policy change within a window) — the rule schema is designed to support this, but only single-event field matching is implemented
+- Actual execution of remediation actions (pod termination, credential revocation) against real cloud APIs - the detection engine recommends these actions and flags auto- vs. approval-required, but does not call AWS IAM, Kubernetes, or Microsoft Graph to execute them
+- Multi-event, time-windowed correlation (e.g., linking a login to a subsequent policy change within a window) -  the rule schema is designed to support this, but only single-event field matching is implemented

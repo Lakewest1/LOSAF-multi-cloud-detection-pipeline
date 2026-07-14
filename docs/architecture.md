@@ -85,7 +85,7 @@ Three independent collectors, one per source: AWS CloudTrail, Kubernetes audit l
 2. **Attempt a real API call.** AWS attempts `cloudtrail.lookupEvents()`; Kubernetes attempts to load an active `kubeconfig` context; Azure attempts a Microsoft Graph `auditLogs/signIns` call with a bearer token.
 3. **Fall back to realistic mock data on failure or absence**, so the pipeline runs deterministically in any environment with zero cloud setup required.
 
-This means the same collector code path exercises real cloud integration when credentials are present, and a fully working demo when they aren't — without any code branching required by the operator.
+This means the same collector code path exercises real cloud integration when credentials are present, and a fully working demo when they aren't - without any code branching required by the operator.
 
 ### 2. Normalization Engine (`normalization/event-normalizer.ts`)
 

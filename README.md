@@ -161,8 +161,8 @@ See [docs/architecture.md](./docs/architecture.md) for full component detail.
 
 ## 📚 Documentation
 
-- [Architecture](./docs/architecture.md) — system design and components
-- [Demo Scenario](./docs/demo-scenario.md) — end-to-end walkthrough
+- [Architecture](./docs/architecture.md) - system design and components
+- [Demo Scenario](./docs/demo-scenario.md) - end-to-end walkthrough
 
 ---
 
@@ -183,7 +183,7 @@ cd dashboard && npm run dev # Start React dashboard
 
 ## 🔐 Security
 
-- No hardcoded credentials — all configuration via environment variables
+- No hardcoded credentials - all configuration via environment variables
 - Credentials never required to run the demo pipeline (mock fallback by design)
 - Prisma engine configured for `binary` mode to avoid TLS interception issues in restrictive network environments
 
@@ -205,19 +205,19 @@ cd dashboard && npm run dev # Start React dashboard
 
 ## 🤝 Contributing
 
-Contributions welcome — fork, branch, and submit a pull request with a clear description.
+Contributions welcome - fork, branch, and submit a pull request with a clear description.
 
 ---
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE)
+MIT License - see [LICENSE](LICENSE)
 
 ---
 
 ## 👤 Author
 
-**Ola Lekan** (Lakewest Cybersecurity) — Security Engineer & Full-Stack Developer
+**Olalekan Musa** (Sir Lakewest Cybersecurity) - Security Engineer & Full-Stack Developer
 [GitHub](https://github.com/lakewest1) · [Portfolio](https://lakewest.netlify.app)
 
 ---
