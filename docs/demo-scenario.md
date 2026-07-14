@@ -85,12 +85,12 @@ Actor: user@company.onmicrosoft.com | Target: AZURE | Severity: low
 Note event `[6]`: the Azure login from `admin@company.onmicrosoft.com` escalates to `high` severity - its mock source IP (`185.220.100.50`) matches a known Tor exit node, and its region is Russia. This is the normalizer's basic threat-signal escalation logic, not just a static severity assignment.
 
 **Result:** all 7 events move to `status: normalized`, with `action`/`actor`/`target`/`severity` written into `normalizedData`.
+```
 
----
 
 ## Step 3 -  MITRE ATT&CK Mapping
 
-```bash
+
 npm run mapper
 ```
 Found 7 normalized events
@@ -108,10 +108,10 @@ T1078 - Valid Accounts (Initial Access) -  3 events - azure_entra, aws_cloudtrai
 T1611 - Escape to Host (Privilege Escalation) - 2 events - kubernetes_audit
 T1609 - Container Administration Command (Execution) - 1 event - kubernetes_audit
 T1552 - Unsecured Credentials (Credential Access) - 1 event - aws_cloudtrail
-
+```
 🛡️  LOSAF Detection Engine
 Loaded 3 detection rules:
-
+```
 aws-login-001: Suspicious AWS Login from Unusual Location
 identity-priv-001: Identity Privilege Escalation
 k8s-escape-001: Kubernetes Pod Execution / Container Escape Attempt
@@ -134,7 +134,7 @@ Response:      REVOKE_CREDENTIALS (auto: false)
 ✅ Detection complete: 2 rule(s) fired across 7 events
 
 Note that `aws-login-001` doesn't fire here - correctly. That rule only evaluates AWS-sourced login events, and the Tor-IP/Russia indicators in this run are on the *Azure* login, not an AWS one. This demonstrates the rule's specificity rather than a bug: each rule only checks the event types it's actually designed for.
-
+```
 ---
 
 ## Step 5 - Dashboard
