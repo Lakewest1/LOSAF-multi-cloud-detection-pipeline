@@ -58,7 +58,7 @@ Similarly, detection results are computed live from the database on each request
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/lakewest1/losaf-platform.git
+git clone https://github.com/Lakewest1/LOSAF-multi-cloud-detection-pipeline
 cd losaf-platform
 npm install
 cd dashboard && npm install && cd ..

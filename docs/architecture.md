@@ -5,7 +5,7 @@
 LOSAF (Lakewe$t Open Security Automation Framework) ingests security telemetry from AWS, Azure, and Kubernetes, normalizes it into a common schema, maps it to the MITRE ATT&CK framework, evaluates it against declarative detection rules, and surfaces the results in a real-time dashboard.
 
 ## Data Flow
-
+```
 ┌─────────────────────────────────────────────────┐
 │              Security Data Sources               │
 │                                                   │
@@ -74,7 +74,7 @@ LOSAF (Lakewe$t Open Security Automation Framework) ingests security telemetry f
 │  Contained Actors,        │
 │  Multi-Cloud KPIs         │
 └──────────────────────────┘
-
+```
 ## Components
 
 ### 1. Collectors (`collectors/`)
