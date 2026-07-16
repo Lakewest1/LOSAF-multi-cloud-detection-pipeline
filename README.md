@@ -8,6 +8,10 @@
 
 ---
 
+## 🎥 Demo Video
+
+[Watch the full walkthrough] https://youtu.be/jT9a2qFGDHg?si=3jfc3KHQhpNWDM1y — collection → normalization → MITRE mapping → detection → live dashboard, ~11 minutes.
+
 ## 🎯 Overview
 
 LOSAF ingests security telemetry from AWS, Azure, and Kubernetes, normalizes it into a common schema, maps it to the MITRE ATT&CK framework, evaluates it against declarative YAML detection rules, and surfaces the results in a real-time dashboard.

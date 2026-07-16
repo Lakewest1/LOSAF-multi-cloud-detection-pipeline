@@ -4,7 +4,7 @@ id: k8s-escape-001
 description: |
   Detects exec-into-pod events, which may indicate an attacker running
   commands inside a container as a precursor to container escape or
-  lateral movement — especially when the target namespace is
+  lateral movement especially when the target namespace is
   production or kube-system.
 
 source: kubernetes_audit

@@ -54,7 +54,7 @@ export class KubernetesCollector extends EventEmitter {
 
       if (this.clusterAvailable && this.coreApi) {
         try {
-          const events = await this.coreApi.listNamespacedEvent('default');
+          const events = await this.coreApi.listNamespacedEvent({ namespace: 'default' });
           suspiciousEvents = this.parseK8sEvents(events);
 
           if (suspiciousEvents.length === 0) {
